@@ -4,7 +4,7 @@ include "kurt_dbConn.php"; // Ensure this file is included
 // Get the data from POST request
 $device_token = isset($_POST['device_token']) ? $_POST['device_token'] : '';
 $receiver_device_id = isset($_POST['receiver_device_id']) ? $_POST['receiver_device_id'] : '';
-$message_text = isset($_POST['message_text']) ? $_POST['message_text'] : '';
+$location = isset($_POST['location']) ? $_POST['location'] : '';
 
 // Check if the connection is valid
 if (!$mysqli) {
@@ -22,8 +22,8 @@ if ($result->num_rows > 0) {
     $sender_device_id = $row['device_id'];
 
     // Insert message into tbl_kurtMessage
-    $stmt = $mysqli->prepare("INSERT INTO tbl_kurtMessage (sender_device_id, receiver_device_id, message_text, status) VALUES (?, ?, ?, 0)");
-    $stmt->bind_param("iis", $sender_device_id, $receiver_device_id, $message_text);
+    $stmt = $mysqli->prepare("INSERT INTO tbl_kurtMessage (sender_device_id, receiver_device_id, location, status) VALUES (?, ?, ?, 0)");
+    $stmt->bind_param("iis", $sender_device_id, $receiver_device_id, $location);
 
     if ($stmt->execute()) {
         echo json_encode(["success" => true, "message" => "Message sent successfully."]);

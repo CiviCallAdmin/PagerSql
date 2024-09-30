@@ -5,7 +5,7 @@ include "kurt_dbConn.php"; // Ensure this file is included
 $user_name = isset($_POST['user_name']) ? $_POST['user_name'] : '';
 $profile_pic = isset($_POST['profile_pic']) ? $_POST['profile_pic'] : '';
 $device_token = isset($_POST['device_token']) ? $_POST['device_token'] : '';
-$department = isset($_POST['department']) ? $_POST['department'] : '';
+$idNumber = isset($_POST['idNumber']) ? $_POST['idNumber'] : '';
 
 // Check if the connection is valid
 if (!$mysqli) {
@@ -13,11 +13,11 @@ if (!$mysqli) {
 }
 
 // Prepare and bind
-$stmt = $mysqli->prepare("INSERT INTO tbl_kurtDevice (user_name, profile_pic, device_token, department) VALUES (?, ?, ?, ?)");
+$stmt = $mysqli->prepare("INSERT INTO tbl_kurtDevice (user_name, profile_pic, device_token, idNumber) VALUES (?, ?, ?, ?)");
 if ($stmt === false) {
     die("Prepare failed: " . $mysqli->error);
 }
-$stmt->bind_param("ssss", $user_name, $profile_pic, $device_token, $department);
+$stmt->bind_param("ssss", $user_name, $profile_pic, $device_token, $idNumber);
 
 // Execute the statement
 if ($stmt->execute()) {

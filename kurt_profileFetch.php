@@ -10,18 +10,18 @@ if (!$mysqli) {
 }
 
 // Check for existing record with the device token
-$stmt = $mysqli->prepare("SELECT user_name, department, profile_pic FROM tbl_kurtDevice WHERE device_token = ?");
+$stmt = $mysqli->prepare("SELECT user_name, idNumber, profile_pic FROM tbl_kurtDevice WHERE device_token = ?");
 $stmt->bind_param("s", $device_token);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Record exists, fetch current user name, department, and profile_pic
+    // Record exists, fetch current user name, idNumber, and profile_pic
     $row = $result->fetch_assoc();
     echo json_encode([
         "success" => true,
         "user_name" => $row['user_name'],
-        "department" => $row['department'],
+        "idNumber" => $row['idNumber'],
         "profile_pic" => $row['profile_pic'] // Include the profile_pic field
     ]);
 } else {

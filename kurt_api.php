@@ -8,9 +8,9 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 if ($action == 'sendMessage') {
     $sender_id = $_POST['sender_id'];
     $receiver_id = $_POST['receiver_id'];
-    $message = $_POST['message'];
+    $location = $_POST['location'];
 
-    $query = "INSERT INTO tbl_kurtMessage (sender_device_id, receiver_device_id, message_text) VALUES (?, ?, ?)";
+    $query = "INSERT INTO tbl_kurtMessage (sender_device_id, receiver_device_id, location) VALUES (?, ?, ?)";
     $stmt = $mysqli->prepare($query);
     $stmt->bind_param('iis', $sender_id, $receiver_id, $message);
 
@@ -26,7 +26,7 @@ if ($action == 'sendMessage') {
 if ($action == 'getMessages') {
     $device_id = $_GET['device_id'];
 
-    $query = "SELECT m.message_id, d.user_name AS sender, m.message_text, m.sent_at 
+    $query = "SELECT m.message_id, d.user_name AS sender, m.location, m.sent_at 
               FROM tbl_kurtMessage m 
               JOIN tbl_kurtDevice d ON m.sender_device_id = d.device_id 
               WHERE m.receiver_device_id = ? ORDER BY m.sent_at DESC";
